@@ -70,13 +70,13 @@ def requestor(urls, dirb, host, port, agent, esindex):
 			if(r.status_code == 200):
 				print urld+' - '+ str(r.status_code) +':'+ str(len(r.content))
 		except requests.exceptions.Timeout:
-			print urld+' - Timeout'
+			#print urld+' - Timeout'
 			stat = -1
 		except requests.exceptions.ConnectionError:
-			print url+dirb+' - Connection Error!'
+			#print url+dirb+' - Connection Error!'
 			stat = -2
 		except requests.exceptions.TooManyRedirects:
-			print urld+' - Too many redirects!'
+			#print urld+' - Too many redirects!'
 			stat = -3
 		except:
 			stat = 0
@@ -89,7 +89,7 @@ def requestor(urls, dirb, host, port, agent, esindex):
 				'content-length': cont_len,
 				'content': content,
 				'title': title,
-				'link': url,
+				'link': url+dirb,
 				'directory': dirb
 			}
 			try:
