@@ -6,6 +6,19 @@ This tool can be used to store masscan data in elasticsearch,
 It also allows the output of a directory busting tool to be
 inserted also. All your base are belong to us.
 
+quickstart: - example usage
+
+Run and import a scan of home network
+./scantastic.py -s -H 192.168.192.0/24 -p 80,443 -x homescan.xml
+
+Export homescan to a list of urls
+./scantastic.py -eurl -x homescan.xml > urlist
+
+Brute force the url list using wordlist and put results into index homescan
+using 10 threads (By default it uses 1 thread)
+./scantastic.py -d -u urlist -w some_wordlist -i homescan -t 10
+
+
 
 root@ubuntu:~/scantastic-tool# ./scantastic.py -h
 usage: scantastic.py [-h] [-d] [-s] [-sl] [-e] [-eurl] [-del] [-H HOST]
