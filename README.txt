@@ -3,8 +3,8 @@ It's bloody scantastic
 ======================
 
 This tool can be used to store masscan data in elasticsearch,
-It also allows the output of a directory busting tool to be
-inserted also. All your base are belong to us.
+It allows the output of a directory busting tool to be inserted also. 
+All your base are belong to us.
 
 quickstart: - example usage
 
