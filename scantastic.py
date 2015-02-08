@@ -103,18 +103,20 @@ def requestor(urls, dirb, host, port, agent, esindex):
 				result = es.index(index=esindex, doc_type='hax', body=data)
 
 #Run regular masscan on specified range
-def scan(host, ports, xml, index, eshost, esport):
+def scan(host, ports, xml, index, eshost, esport, noin):
 	ms = Masscan(host, 'xml/'+xml, ports)
 	ms.run()
-	ms.import_es(index, eshost, esport)
-	print ms.output
+	if(noin == False):
+		ms.import_es(index, eshost, esport)
+		print ms.output
 
 #Run masscan on file of ranges
-def scanlst(hostfile, ports, xml, index, eshost, esport):
-	ms = Masscan(host, 'xml/'+xml, ports)
+def scanlst(hostfile, ports, xml, index, eshost, esport, noin):
+	ms = Masscan(hostfile, 'xml/'+xml, ports)
 	ms.runfile()
-	ms.import_es(index, eshost, esport)
-	print ms.output
+	if(noin == False):
+		ms.import_es(index, eshost, esport)
+		print ms.output
 
 def export_xml(xml, index, eshost, esport):
 	ms = Masscan('x','xml/'+xml,'y')
@@ -140,6 +142,8 @@ if __name__ == '__main__':
 		help='Run masscan on single range. Specify --host & --ports & --xml')
 	parse.add_argument('-sl', '--scanlist',action='store_true', default='scanlist',
 		help='Run masscan on a list ranges. Requires --host & --ports & --xml')
+	parse.add_argument('-in','--noinsert', action='store_true', default=False,
+		help='Perform a scan without inserting to elasticsearch')
 	parse.add_argument('-e', '--export', action='store_true', default=False,
 		help='Export a scan XML into elasticsearch. Requires --xml')
 	parse.add_argument('-eurl', '--exporturl', action='store_true', default=False,
@@ -176,10 +180,12 @@ if __name__ == '__main__':
 		version_info()
 		
 	if (args.scan) and (args.host != None):
-		scan(args.host, args.ports, args.xml, args.index, args.eshost, args.port)
+		scan(args.host, args.ports, args.xml, args.index, args.eshost, 
+				args.port, args.noinsert)
 	
 	if (args.scanlist) and (args.host != None):
-		scanlst(args.host, args.ports, args.xml, args.index, args.eshost, args.port)	
+		scanlst(args.host, args.ports, args.xml, args.index, args.eshost, 
+				args.port, args.noinsert)	
 	
 	if (args.export):
 		export_xml(args.xml, args.index, args.eshost, args.port)	
