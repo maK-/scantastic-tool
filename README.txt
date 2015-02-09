@@ -2,6 +2,8 @@
 It's bloody scantastic
 ======================
 
+If you like this and are feeling a bit(coin) generous - 1JdSGqg2zGTbpFMJPLbWoXg7Nng3z1Qp58
+
 It works for me.
 http://makthepla.net/scantastichax.png - Old Example
 
