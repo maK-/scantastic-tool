@@ -63,7 +63,10 @@ def requestor(urls, dirb, host, port, agent, esindex):
 			time = datetime.utcnow()
 			cont_len = len(r.content)
 			title = returnTitle(r.content)
-			content = r.content[0:500]
+			if len(r.content) >= 500:
+				content = r.content[0:500]
+			else:
+				content = r.content
 			ip = returnIPaddr(url)
 			if 'image' in r.headers['content-type']:
 				content = 'image'
