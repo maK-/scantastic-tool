@@ -3,8 +3,7 @@ It's bloody scantastic
 ======================
 
 It works for me.
-![exampleScan][logo]
-[logo]: http://makthepla.net/scantastichax.png "Example Scan"
+http://makthepla.net/scantastichax.png - Old Example
 
 Dependencies: (DIY - I ain't supportin shit)
 Masscan - https://github.com/robertdavidgraham/masscan
@@ -18,7 +17,7 @@ pip install netaddr
 pip install xmltodict
 
 This tool can be used to store masscan data in elasticsearch, 
-(the scantastic plugin in the image is not included)
+(the scantastic plugin in the image is not here)
 It allows the output of a directory busting tool to be inserted also. 
 All your base are belong to us. I might maintain or improve this over time. MIGHT.
 
@@ -69,4 +68,3 @@ optional arguments:
                         Specify the ElasticSearch index
   -a AGENT, --agent AGENT
                         Specify a User Agent for requests
-
