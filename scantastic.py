@@ -63,7 +63,7 @@ def requestor(urls, dirb, host, port, agent, esindex):
 			time = datetime.utcnow()
 			cont_len = len(r.content)
 			title = returnTitle(r.content)
-			content = r.content
+			content = r.content[0:500]
 			ip = returnIPaddr(url)
 			if 'image' in r.headers['content-type']:
 				content = 'image'
@@ -93,14 +93,17 @@ def requestor(urls, dirb, host, port, agent, esindex):
 				'directory': dirb
 			}
 			try:
-				if data['status'] != 404:
+				if data['status'] == 200:
 					result = es.index(index=esindex, doc_type='hax', body=data)
 				else:
 					pass
 			except:
 				data['title'] = 'Unicode Error'
 				data['content'] = 'Unicode Error'
-				result = es.index(index=esindex, doc_type='hax', body=data)
+				if data['status'] == 200:
+					result = es.index(index=esindex, doc_type='hax', body=data)
+				else:
+					pass
 
 #Run regular masscan on specified range
 def scan(host, ports, xml, index, eshost, esport, noin):
