@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import multiprocessing
-import Queue
 import argparse
 import sys
 import requests
