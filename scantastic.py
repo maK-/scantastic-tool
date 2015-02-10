@@ -218,10 +218,10 @@ if __name__ == '__main__':
 					args=(splitlist[i], word, args.eshost, args.port, args.agent, args.index))
 				threads.append(p)
 				p.start()
-			for p in threads:
-				try:
+			try:
+				for p in threads:
 					p.join()
-				except KeyboardInterrupt:
-					print "Killing threads..."
-					for p in threads:
-						p.terminate()
+			except KeyboardInterrupt:
+				print "Killing threads..."
+				for p in threads:
+					p.terminate()
