@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import multiprocessing
-import Queue
 import argparse
 import sys
 import requests
@@ -170,7 +169,7 @@ if __name__ == '__main__':
 		help='Specify the number of threads to use.')
 	parse.add_argument('-esh','--eshost',type=str,default=u'127.0.0.1',
 		help='Specify the elasticsearch host')
-	parse.add_argument('-esp','--port',type=int,default=59295,
+	parse.add_argument('-esp','--port',type=int,default=5900,
 		help='Specify ElasticSearch port')
 	parse.add_argument('-i','--index',type=str,default='scantastic',
 		help='Specify the ElasticSearch index')

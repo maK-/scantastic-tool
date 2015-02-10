@@ -2,13 +2,30 @@
 It's bloody scantastic
 ======================
 
-This tool can be used to store masscan data in elasticsearch,
+If you like this and are feeling a bit(coin) generous - 1JdSGqg2zGTbpFMJPLbWoXg7Nng3z1Qp58
+
+It works for me.
+http://makthepla.net/scantastichax.png - Old Example
+
+Dependencies: (DIY - I ain't supportin shit)
+Masscan - https://github.com/robertdavidgraham/masscan
+ElasticSearch - http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html
+Kibana - http://www.elasticsearch.org/overview/kibana/installation/
+
+Python libs -
+pip install elasticsearch
+pip install requests
+pip install netaddr
+pip install xmltodict
+
+This tool can be used to store masscan data in elasticsearch, 
+(the scantastic plugin in the image is not here)
 It allows the output of a directory busting tool to be inserted also. 
-All your base are belong to us.
+All your base are belong to us. I might maintain or improve this over time. MIGHT.
 
 quickstart: - example usage
 
-Run and import a scan of home network
+Run and import a scan of home /24 network
 ./scantastic.py -s -H 192.168.192.0/24 -p 80,443 -x homescan.xml
 
 Export homescan to a list of urls
@@ -53,4 +70,3 @@ optional arguments:
                         Specify the ElasticSearch index
   -a AGENT, --agent AGENT
                         Specify a User Agent for requests
-
