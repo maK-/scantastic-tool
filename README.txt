@@ -39,17 +39,21 @@ using 10 threads (By default it uses 1 thread)
 
 
 root@ubuntu:~/scantastic-tool# ./scantastic.py -h
-usage: scantastic.py [-h] [-d] [-s] [-sl] [-e] [-eurl] [-del] [-H HOST]
-                     [-p PORTS] [-x XML] [-w WORDS] [-u URLS] [-t THREADS]
-                     [-esh ESHOST] [-esp PORT] [-i INDEX] [-a AGENT]
+usage: scantastic.py [-h] [-v] [-d] [-s] [-noes] [-sl] [-in] [-e] [-eurl]
+                     [-del] [-H HOST] [-p PORTS] [-x XML] [-w WORDS] [-u URLS]
+                     [-t THREADS] [-esh ESHOST] [-esp PORT] [-i INDEX]
+                     [-a AGENT]
 
 optional arguments:
   -h, --help            show this help message and exit
+  -v, --version         Version information
   -d, --dirb            Run directory brute force. Requires --urls & --words
   -s, --scan            Run masscan on single range. Specify --host & --ports
                         & --xml
+  -noes, --noelastics   Run scan without elasticsearch insertion
   -sl, --scanlist       Run masscan on a list ranges. Requires --host &
                         --ports & --xml
+  -in, --noinsert       Perform a scan without inserting to elasticsearch
   -e, --export          Export a scan XML into elasticsearch. Requires --xml
   -eurl, --exporturl    Export urls to scan from XML file. Requires --xml
   -del, --delete        Specify an index to delete.
