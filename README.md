@@ -11,13 +11,6 @@ It works for me: http://makthepla.net/scantastichax.png - Old Example
  - ElasticSearch - http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html
  - Kibana - http://www.elasticsearch.org/overview/kibana/installation/
 
-Python libs:
-
- - pip install elasticsearch
- - pip install requests
- - pip install netaddr
- - pip install xmltodict
- - pip install numpy
 
 This tool can be used to store masscan data in elasticsearch, 
 (the scantastic plugin in the image is not here)
