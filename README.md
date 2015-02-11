@@ -1,43 +1,54 @@
 # scantastic-tool
-It's bloody scantastic
-======================
+
+## It's bloody scantastic
 
 If you like this and are feeling a bit(coin) generous - 1JdSGqg2zGTbpFMJPLbWoXg7Nng3z1Qp58
 
-It works for me.
-http://makthepla.net/scantastichax.png - Old Example
+It works for me: http://makthepla.net/scantastichax.png - Old Example
 
-Dependencies: (DIY - I ain't supportin shit)
-Masscan - https://github.com/robertdavidgraham/masscan
-ElasticSearch - http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html
-Kibana - http://www.elasticsearch.org/overview/kibana/installation/
+ - Dependencies: (DIY - I ain't supportin shit)
+ - Masscan - https://github.com/robertdavidgraham/masscan
+ - ElasticSearch - http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_installing_elasticsearch.html
+ - Kibana - http://www.elasticsearch.org/overview/kibana/installation/
 
-Python libs -
-pip install elasticsearch
-pip install requests
-pip install netaddr
-pip install xmltodict
-pip install numpy
+Python libs:
+
+ - pip install elasticsearch
+ - pip install requests
+ - pip install netaddr
+ - pip install xmltodict
+ - pip install numpy
 
 This tool can be used to store masscan data in elasticsearch, 
 (the scantastic plugin in the image is not here)
 It allows the output of a directory busting tool to be inserted also. 
+
 All your base are belong to us. I might maintain or improve this over time. MIGHT.
 
-quickstart: - example usage
+## Quickstart
+
+### Example usage
 
 Run and import a scan of home /24 network
+
+```
 ./scantastic.py -s -H 192.168.192.0/24 -p 80,443 -x homescan.xml
+```
 
 Export homescan to a list of urls
+
+```
 ./scantastic.py -eurl -x homescan.xml > urlist
+```
 
 Brute force the url list using wordlist and put results into index homescan
 using 10 threads (By default it uses 1 thread)
+
+```
 ./scantastic.py -d -u urlist -w some_wordlist -i homescan -t 10
+```
 
-
-
+```
 root@ubuntu:~/scantastic-tool# ./scantastic.py -h
 usage: scantastic.py [-h] [-v] [-d] [-s] [-noes] [-sl] [-in] [-e] [-eurl]
                      [-del] [-H HOST] [-p PORTS] [-x XML] [-w WORDS] [-u URLS]
@@ -75,3 +86,4 @@ optional arguments:
                         Specify the ElasticSearch index
   -a AGENT, --agent AGENT
                         Specify a User Agent for requests
+```
