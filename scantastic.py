@@ -9,7 +9,8 @@ from time import sleep
 from elasticsearch import Elasticsearch
 from masscan import Masscan
 from xmltourl import Xml2urls
-
+from pprint import pprint
+from numpy import array_split
 requests.packages.urllib3.disable_warnings()
 
 def version_info():
@@ -23,13 +24,12 @@ def version_info():
 
 #Split the list of urls into chunks for threading
 def split_urls(u, t):
-	print 'Number of URLS: '+str(len(urls))
+	print 'Number of URLS: '+str(len(u))
 	print 'Threads: '+str(t)
-	print 'URLS in each split: '+str(len(urls)/t)
+	print 'URLS in each split: '+str(len(u)/t)
 	print '========================='
 	sleep(1)
-	for i in xrange(0, len(u), t):
-		yield u[i:i+t]
+	return array_split(u,t)
 
 def returnIPaddr(u):
 	ip = ""
@@ -50,7 +50,7 @@ def returnTitle(content):
 	return t2
 
 #Make requests
-def requestor(urls, dirb, host, port, agent, esindex):
+def requestor(urls, dirb, host, port, agent, esindex, usees):
 	data = {}
 	es = Elasticsearch([{u'host': host, u'port': port}])
 	user_agent = {'User-agent': agent}
@@ -96,14 +96,22 @@ def requestor(urls, dirb, host, port, agent, esindex):
 			}
 			try:
 				if data['status'] == 200:
-					result = es.index(index=esindex, doc_type='hax', body=data)
+					if( usees == False):
+						result = es.index(index=esindex, doc_type='hax', 
+							body=data)
+					else:
+						pass
 				else:
 					pass
 			except:
 				data['title'] = 'Unicode Error'
 				data['content'] = 'Unicode Error'
 				if data['status'] == 200:
-					result = es.index(index=esindex, doc_type='hax', body=data)
+					if( usees == False):
+						result = es.index(index=esindex, doc_type='hax', 
+							body=data)
+					else:
+						pass
 				else:
 					pass
 
@@ -145,6 +153,8 @@ if __name__ == '__main__':
 		help='Run directory brute force. Requires --urls & --words')
 	parse.add_argument('-s', '--scan',action='store_true',default=False,
 		help='Run masscan on single range. Specify --host & --ports & --xml')
+	parse.add_argument('-noes','--noelastics',action='store_true',default=False,
+		help='Run scan without elasticsearch insertion')
 	parse.add_argument('-sl', '--scanlist',action='store_true', default='scanlist',
 		help='Run masscan on a list ranges. Requires --host & --ports & --xml')
 	parse.add_argument('-in','--noinsert', action='store_true', default=False,
@@ -211,16 +221,21 @@ if __name__ == '__main__':
 			print 'File not found!'
 		threads = []
 		splitlist = list(split_urls(urls, args.threads))
+
 		for word in words:
+			print 'Word: '+word
 			for i in range(0, len(splitlist)):
 				p = multiprocessing.Process(target=requestor, 
-					args=(splitlist[i], word, args.eshost, args.port, args.agent, args.index))
+					args=(list(splitlist[i]), word, args.eshost, args.port, args.agent, args.index, args.noelastics))
 				threads.append(p)
-				p.start()
 			try:
+				for p in threads:
+					p.start()
 				for p in threads:
 					p.join()
 			except KeyboardInterrupt:
-				print "Killing threads..."
+				print 'Killing Threads...'
 				for p in threads:
 					p.terminate()
+				sys.exit(0)
+			threads = []

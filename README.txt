@@ -17,6 +17,7 @@ pip install elasticsearch
 pip install requests
 pip install netaddr
 pip install xmltodict
+pip install numpy
 
 This tool can be used to store masscan data in elasticsearch, 
 (the scantastic plugin in the image is not here)
