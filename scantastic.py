@@ -167,7 +167,7 @@ if __name__ == '__main__':
                        help='Run masscan on single range. Specify --host & --ports & --xml')
     parse.add_argument('-noes', '--noelastics', action='store_true', default=False,
                        help='Run scan without elasticsearch insertion')
-    parse.add_argument('-sl', '--scanlist', action='store_true', default='scanlist',
+    parse.add_argument('-sl', '--scanlist', action='store_true', default=False,
                        help='Run masscan on a list ranges. Requires --host & --ports & --xml')
     parse.add_argument('-in', '--noinsert', action='store_true', default=False,
                        help='Perform a scan without inserting to elasticsearch')
