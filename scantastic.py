@@ -16,15 +16,16 @@ from numpy import array_split
 
 requests.packages.urllib3.disable_warnings()
 
-
 def version_info():
-    VERSION_INFO = 'Scantastic v1.0'
-    AUTHOR_INFO = 'Author: Ciaran McNally - http://makthepla.net'
-    print'  _ _ _..__|_ _. __|_o _'
-    print' _>(_(_|| ||_(_|_> |_|(_'
-    print'========================='
-    print VERSION_INFO
-    print AUTHOR_INFO
+	VERSION_INFO = 'Scantastic v2.0'
+	AUTHOR_INFO = 'Author: Ciaran McNally - https://makthepla.net'
+	print '                 _           _   _'
+	print ' ___ ___ ___ ___| |_ ___ ___| |_|_|___'
+	print '|_ -|  _| .\'|   |  _| .\'|_ -|  _| |  _|'
+	print '|___|___|__,|_|_|_| |__,|___|_| |_|___|'
+	print '======================================='
+	print VERSION_INFO
+	print AUTHOR_INFO
 
 
 # Split the list of urls into chunks for threading
