@@ -8,8 +8,10 @@ import string
 from datetime import datetime
 from time import sleep
 from elasticsearch import Elasticsearch
-from masscan import Masscan
+from netscan import Masscan
+from netscan import Nmap
 from xmltourl import Xml2urls
+from xmltourl import Xml2urls2
 from numpy import array_split
 
 requests.packages.urllib3.disable_warnings()
@@ -139,11 +141,30 @@ def scanlst(hostfile, ports, xml, index, eshost, esport, noin):
         ms.import_es(index, eshost, esport)
         print ms.output
 
+# Run regular masscan on specified range
+def nscan(host, ports, xml, index, eshost, esport, noin):
+    ms = Nmap(host, 'xml/' + xml, ports)
+    ms.run()
+    if noin == False:
+        ms.import_es(index, eshost, esport)
+        print ms.output
+
+
+# Run masscan on file of ranges
+def nscanlst(hostfile, ports, xml, index, eshost, esport, noin):
+    ms = Nmap(hostfile, 'xml/' + xml, ports)
+    ms.runfile()
+    if noin == False:
+        ms.import_es(index, eshost, esport)
+        print ms.output
 
 def export_xml(xml, index, eshost, esport):
     ms = Masscan('x', 'xml/' + xml, 'y')
     ms.import_es(index, eshost, esport)
 
+def nexport_xml(xml, index, eshost, esport):
+    ms = Nmap('x', 'xml/' + xml, 'y')
+    ms.import_es(index, eshost, esport)
 
 def delete_index(dindex, eshost, esport):
     url = 'http://' + eshost + ':' + str(esport) + '/' + dindex
@@ -156,6 +177,9 @@ def export_urls(xml):
     x = Xml2urls(xml)
     x.run()
 
+def nexport_urls(xml):
+    x = Xml2urls2(xml)
+    x.run()
 
 if __name__ == '__main__':
     parse = argparse.ArgumentParser()
@@ -165,16 +189,22 @@ if __name__ == '__main__':
                        help='Run directory brute force. Requires --urls & --words')
     parse.add_argument('-s', '--scan', action='store_true', default=False,
                        help='Run masscan on single range. Specify --host & --ports & --xml')
+    parse.add_argument('-ns', '--nmap', action='store_true', default=False,
+			help='Run Nmap on a single range specify -H & -p')
     parse.add_argument('-noes', '--noelastics', action='store_true', default=False,
                        help='Run scan without elasticsearch insertion')
-    parse.add_argument('-sl', '--scanlist', action='store_true', default='scanlist',
-                       help='Run masscan on a list ranges. Requires --host & --ports & --xml')
+    parse.add_argument('-sl', '--scanlist', action='store_true', default=False,
+                       help='Run masscan on a list of ranges. Requires --host & --ports & --xml')
+    parse.add_argument('-nsl', '--nmaplist', action='store_true', default=False, 
+			help='Run Nmap on a list of ranges -H & -p & -x')
     parse.add_argument('-in', '--noinsert', action='store_true', default=False,
                        help='Perform a scan without inserting to elasticsearch')
     parse.add_argument('-e', '--export', action='store_true', default=False,
                        help='Export a scan XML into elasticsearch. Requires --xml')
     parse.add_argument('-eurl', '--exporturl', action='store_true', default=False,
                        help='Export urls to scan from XML file. Requires --xml')
+    parse.add_argument('-nurl', '--exportnmap', action='store_true', default=False,
+			help='Export urls from nmap XML, requires -x')
     parse.add_argument('-del', '--delete', action='store_true', default=False,
                        help='Specify an index to delete.')
     parse.add_argument('-H', '--host', type=str, help='Scan this host or list of hosts')
@@ -209,9 +239,15 @@ if __name__ == '__main__':
     if args.scan and (args.host is not None):
         scan(args.host, args.ports, args.xml, args.index, args.eshost,
              args.port, args.noinsert)
+    elif args.nmap and (args.host is not None):
+	nscan(args.host, args.ports, args.xml, args.index, args.eshost,
+             args.port, args.noinsert)
 
     if args.scanlist and (args.host is not None):
         scanlst(args.host, args.ports, args.xml, args.index, args.eshost,
+                args.port, args.noinsert)
+    elif args.nmaplist and (args.host is not None):
+	nscanlst(args.host, args.ports, args.xml, args.index, args.eshost,
                 args.port, args.noinsert)
 
     if args.export:
@@ -222,6 +258,8 @@ if __name__ == '__main__':
 
     if args.exporturl:
         export_urls(args.xml)
+    elif args.exportnmap:
+	nexport_urls(args.xml)
 
     if args.dirb:
         try:

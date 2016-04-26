@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.01 scan initiated Sun Apr 24 21:48:29 2016 as: nmap -sS -Pn -oX xml/scan.xml -p 22 -&#45;open 192.168.192.0/24 -->
+<nmaprun scanner="nmap" args="nmap -sS -Pn -oX xml/scan.xml -p 22 -&#45;open 192.168.192.0/24" start="1461530909" startstr="Sun Apr 24 21:48:29 2016" version="7.01" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="1" services="22"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1461530909" endtime="1461530912"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.192.51" addrtype="ipv4"/>
+<address addr="36:E6:6A:0E:97:B1" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="6723" rttvar="7092" to="100000"/>
+</host>
+<runstats><finished time="1461530912" timestr="Sun Apr 24 21:48:32 2016" elapsed="2.92" summary="Nmap done at Sun Apr 24 21:48:32 2016; 256 IP addresses (5 hosts up) scanned in 2.92 seconds" exit="success"/><hosts up="5" down="251" total="256"/>
+</runstats>
+</nmaprun>
