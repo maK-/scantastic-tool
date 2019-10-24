@@ -113,12 +113,12 @@ class Nmap:
                 try: #if one result
                         if int(port1['ports']['port']['@portid']) > 0:
                                 port2 = port1['ports']['port']['@portid']
-                                toES(address, str(port2), es_index, host, port)
+                                self.toES(address, str(port2), es_index, host, port)
                 except: #if multiple
                         port2 = i['ports']['port']#[0]['@portid']
                         for z in port2:
                                 x = z['@portid']
-                                toES(address, str(x), es_index, host, port)
+                                self.toES(address, str(x), es_index, host, port)
         except IOError, e:
             print e
 
